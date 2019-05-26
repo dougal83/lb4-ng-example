@@ -1,0 +1,45 @@
+{
+  "name": "lb4-ng-example",
+  "version": "1.0.0",
+  "description": "An example combining Loopback 4 /w Angular",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "setup:server": "cd server && npm i",
+    "setup:client": "cd client && npm i",
+    "setup": "npm i && npm run setup:server && npm run setup:client",
+    "clean": "npx rimraf server/dist",
+    "prewatch:client": "npx rimraf server/public",
+    "watch:client": "cd client && start /min ng build --watch --output-path ../server/public",
+    "watch:server": "start /min npm run --prefix server build:watch",
+    "predev": "npm run clean",
+    "dev": "npx concurrently --success first --kill-others \"npm run watch:client\" \"npx wait-on -d 3000 server/public && npm run watch:server\"  \"npx wait-on server/dist && cd server && npx nodemon --watch dist index.js\" ",
+    "prebuild:client": "npx rimraf server/public",
+    "build:client": "cd client && ng build --prod --output-path ../server/public",
+    "build:server": "npm run --prefix server build",
+    "prebuild": "npm run clean",
+    "build": "npm run build:client && npm run build:server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/dougal83/lb4-ng-example.git"
+  },
+  "keywords": [
+    "Loopback",
+    "lb4",
+    "Angular",
+    "ng"
+  ],
+  "author": "dougal83",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/dougal83/lb4-ng-example/issues"
+  },
+  "homepage": "https://github.com/dougal83/lb4-ng-example#readme",
+  "devDependencies": {
+    "concurrently": "^4.1.0",
+    "nodemon": "^1.19.1",
+    "rimraf": "^2.6.3",
+    "wait-on": "^3.2.0"
+  }
+}
