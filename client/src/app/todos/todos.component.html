@@ -1,0 +1,36 @@
+<h1>Todos Example</h1>
+
+<h2>Todo List</h2>
+
+<table>
+  <thead>
+    <tr>
+      <th>Title</th>
+      <th>Description</th>
+      <th>Complete?</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let todo of todos">
+      <td>{{ todo.title }}</td>
+      <td>{{ todo.desc }}</td>
+      <td>{{ todo.isComplete }}</td>
+      <td>
+        <button (click)="deleteTodo(todo)">
+          Delete
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h4>Add new todo</h4>
+
+<form [formGroup]="addTodoForm" (ngSubmit)="addTodo()">
+  <input type="text" name="title" formControlName="title" placeholder="Title" />
+  <input type="text" name="desc" formControlName="desc" placeholder="Desc" />
+  <input type="checkbox" name="isComplete" formControlName="isComplete" />
+  <button type="submit" [disabled]="!addTodoForm.valid">
+    Add
+  </button>
+</form>

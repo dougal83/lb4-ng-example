@@ -7,7 +7,8 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "setup:server": "cd server && npm i",
     "setup:client": "cd client && npm i",
-    "setup": "npm i && npm run setup:server && npm run setup:client",
+    "setup:db": "sh ./bin/setup.sh && node server/dist/migrate",
+    "setup": "npm i && npm run setup:server && npm run setup:client && npm run setup:db",
     "clean": "npx rimraf server/dist",
     "prewatch:client": "npx rimraf server/public",
     "watch:client": "cd client && start /min ng build --watch --output-path ../server/public",
@@ -18,7 +19,12 @@
     "build:client": "cd client && ng build --prod --output-path ../server/public",
     "build:server": "npm run --prefix server build",
     "prebuild": "npm run clean",
-    "build": "npm run build:client && npm run build:server"
+    "build": "npm run build:client && npm run build:server",
+    "start:db": "docker start POSTGRES_LB4NGEX",
+    "start:server": "npm run --prefix server start",
+    "build:api": "npx openapi-generator generate -i http://127.0.0.1:3000/api/openapi.json -g typescript-angular -o client/src/app/api",
+    "pregen:apimodule": "npx rimraf client/src/app/api",
+    "gen:apimodule": "npx concurrently --success first --kill-others \"npm run start:server\" \"npx wait-on http://127.0.0.1:3000/api/openapi.json && npm run build:api\""
   },
   "repository": {
     "type": "git",
@@ -37,6 +43,7 @@
   },
   "homepage": "https://github.com/dougal83/lb4-ng-example#readme",
   "devDependencies": {
+    "@openapitools/openapi-generator-cli": "0.0.11-4.0.0-beta3",
     "concurrently": "^4.1.0",
     "nodemon": "^1.19.1",
     "rimraf": "^2.6.3",
