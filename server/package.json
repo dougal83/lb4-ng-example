@@ -55,6 +55,7 @@
     "@loopback/rest": "^1.12.0",
     "@loopback/rest-explorer": "^1.1.23",
     "@loopback/service-proxy": "^1.1.11",
+    "isemail": "^3.2.0",
     "loopback-connector-postgresql": "^3.6.1"
   },
   "devDependencies": {
