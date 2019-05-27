@@ -1,28 +1,16 @@
+import { authenticate } from '@loopback/authentication';
+import { Count, CountSchema, Filter, repository, Where } from '@loopback/repository';
 import {
-  Count,
-  CountSchema,
-  Filter,
-  repository,
-  Where,
-} from '@loopback/repository';
-import {
-  post,
-  param,
-  get,
-  getFilterSchemaFor,
-  getWhereSchemaFor,
-  patch,
-  put,
-  del,
-  requestBody,
+    del, get, getFilterSchemaFor, getWhereSchemaFor, param, patch, post, put, requestBody
 } from '@loopback/rest';
-import {Todo} from '../models';
-import {TodoRepository} from '../repositories';
+
+import { Todo } from '../models';
+import { TodoRepository } from '../repositories';
 
 export class TodoController {
   constructor(
     @repository(TodoRepository)
-    public todoRepository : TodoRepository,
+    public todoRepository: TodoRepository,
   ) {}
 
   @post('/todos', {
@@ -33,6 +21,7 @@ export class TodoController {
       },
     },
   })
+  @authenticate('jwt')
   async create(@requestBody() todo: Todo): Promise<Todo> {
     return await this.todoRepository.create(todo);
   }
@@ -77,6 +66,7 @@ export class TodoController {
       },
     },
   })
+  @authenticate('jwt')
   async updateAll(
     @requestBody() todo: Todo,
     @param.query.object('where', getWhereSchemaFor(Todo)) where?: Where,
@@ -103,6 +93,7 @@ export class TodoController {
       },
     },
   })
+  @authenticate('jwt')
   async updateById(
     @param.path.number('id') id: number,
     @requestBody() todo: Todo,
@@ -117,6 +108,7 @@ export class TodoController {
       },
     },
   })
+  @authenticate('jwt')
   async replaceById(
     @param.path.number('id') id: number,
     @requestBody() todo: Todo,
@@ -131,6 +123,7 @@ export class TodoController {
       },
     },
   })
+  @authenticate('jwt')
   async deleteById(@param.path.number('id') id: number): Promise<void> {
     await this.todoRepository.deleteById(id);
   }
