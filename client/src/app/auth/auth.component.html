@@ -1,0 +1,72 @@
+<h1>Auth Functions</h1>
+
+<p>
+  Hello, <span *ngIf="!authService.isAuthenticated()">Anonymous</span>
+  <span *ngIf="authService.isAuthenticated()">{{ getCurrentUser() }}</span>
+</p>
+
+<div *ngIf="!authService.isAuthenticated()">
+  <h2>Register User</h2>
+
+  <form
+    [formGroup]="registerForm"
+    (ngSubmit)="register()"
+    *ngIf="!authService.isAuthenticated()"
+  >
+    <input
+      matInput
+      formControlName="firstName"
+      name="firstName"
+      placeholder="First Name"
+      type="text"
+      required
+    />
+    <input
+      formControlName="email"
+      name="email"
+      placeholder="Email"
+      type="text"
+      required
+    />
+    <input
+      formControlName="password"
+      name="password"
+      placeholder="Password"
+      type="password"
+      required
+    />
+    <button [disabled]="registerForm.invalid" type="submit">Register</button>
+  </form>
+
+  <h2>Login</h2>
+
+  <form [formGroup]="loginForm" (ngSubmit)="login()">
+    <input
+      formControlName="email"
+      name="email"
+      placeholder="Email"
+      type="text"
+      required
+    />
+    <input
+      formControlName="password"
+      name="password"
+      placeholder="Password"
+      type="password"
+      required
+    />
+    <button [disabled]="loginForm.invalid" type="submit">
+      Login
+    </button>
+  </form>
+</div>
+
+<div *ngIf="authService.isAuthenticated()">
+  Try editing <a href="#/todos">Todos</a> or logout.
+
+  <h2>Logout</h2>
+
+  <button [disabled]="!authService.isAuthenticated()" (click)="onLogout()">
+    Logout
+  </button>
+</div>
