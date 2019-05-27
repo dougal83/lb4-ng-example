@@ -5,6 +5,7 @@ import { HttpClient } from '@angular/common/http';
 
 import { PingControllerService } from './api/pingController.service';
 import { TodoControllerService } from './api/todoController.service';
+import { UserControllerService } from './api/userController.service';
 
 @NgModule({
   imports:      [],
@@ -12,7 +13,8 @@ import { TodoControllerService } from './api/todoController.service';
   exports:      [],
   providers: [
     PingControllerService,
-    TodoControllerService ]
+    TodoControllerService,
+    UserControllerService ]
 })
 export class ApiModule {
     public static forRoot(configurationFactory: () => Configuration): ModuleWithProviders {
