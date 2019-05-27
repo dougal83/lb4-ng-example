@@ -57,6 +57,7 @@
     "@loopback/rest-explorer": "^1.1.23",
     "@loopback/service-proxy": "^1.1.11",
     "bcryptjs": "^2.4.3",
+    "isemail": "^3.2.0",
     "jsonwebtoken": "^8.5.1",
     "loopback-connector-postgresql": "^3.6.1"
   },
