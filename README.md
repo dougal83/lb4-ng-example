@@ -1,6 +1,6 @@
 # lb4-ng-example
 
-Simple example combining Loopback 4 /w Angular. See [Part 2]() for additional features.
+Simple example combining Loopback 4 /w Angular. See [Part 2](#part-2---further-tooling-dbng-service-generation) for additional features. See [Part 3](#part-3---introduce-jwt-authorisation) for auth features.
 
 Just run repo:
 
@@ -95,7 +95,7 @@ N.b. You can run `npm run start:db` to restart the db has been added incase the 
 
 We are using the [OpenAPI Tools - OpenAPI Generator](https://github.com/OpenAPITools/openapi-generator)
 
-You will need to run `npm run gen:apimodule` after making changes to lb4 server models/controllers/etc to reflect changes on client. Afterward you will need to confirm the ng client refernces are correct where the module is used. Remember to use lb4's db migration tool as necessary to update the database schema.
+You will need to run `npm run gen:apimodule` after making changes to lb4 server models/controllers/etc to reflect changes on client. Afterward you will need to confirm the ng client references are correct where the module is used. Remember to use lb4's db migration tool as necessary to update the database schema.
 
 N.b. You can actually integrate prettier for the generated code but that is beyond the scope of this repo. A starting point(Win) would be:
 
@@ -105,3 +105,28 @@ N.b. You can actually integrate prettier for the generated code but that is beyo
 "pregen:apimodule": "npx rimraf client/src/app/api",
 "gen:apimodule": "npx concurrently --success first --kill-others \"npm run start:server\" \"npx wait-on http://127.0.0.1:3000/api/openapi.json && npm run build:apimodule\""
 ```
+
+## Part 3 - Introduce JWT authorisation
+
+- Copy server implementation WIP, [Source](https://github.com/strongloop/loopback4-example-shopping/).
+- Regenerate ng api module. `npm run gen:apimodule`
+- Implement user registration/login forms, enable jwt transport /w http requests.
+
+See commit history for file changes.
+
+### Install packages
+
+```
+cd server
+npm install --save @loopback/authentication bcryptjs jsonwebtoken
+npm install --save-dev @types/bcryptjs @types/jsonwebtoken
+```
+
+```
+cd client
+npm --save install @auth0/angular-jwt
+```
+
+#####
+
+Any questions? Feel free to raise an issue to discuss. Happy to recieve pull requests or improvements. This repo is a bare bones example and the project structure should not be followed for production.
